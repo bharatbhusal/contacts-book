@@ -1,8 +1,16 @@
 import React from 'react'
+import { Routes, Route, Link } from "react-router-dom"
+
 
 const BookList = () => {
+
+
+
     return (
-        <div>BookList</div>
+        <div className='booklist'>
+            Hi
+
+        </div>
     )
 }
 

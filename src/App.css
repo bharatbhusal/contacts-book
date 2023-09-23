@@ -15,23 +15,12 @@ nav {
 }
 
 
-
-nav ul {
-    background: transparent;
-    padding: 0.9rem;
-    /* border-radius: 50%; */
-    display: flex;
-    flex-direction: column;
-    color: var(--color-light);
-    font-size: 1.1rem;
-}
-
 nav a:hover {
     /* background: rgba(0, 0, 0, 0.3); */
     background: rgba(215, 57, 57, 0.3);
 }
 
-nav a.active {
+.active {
     background: var(--color-primary);
     color: var(--color-bg);
 }
