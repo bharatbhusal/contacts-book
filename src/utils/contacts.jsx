@@ -19,11 +19,11 @@ export async function createContact() {
   let contact = {
     id,
     createdAt: Date.now(),
-    first: "First",
-    last: "Last",
-    twitter: "Twitter Handle",
-    avater: "Avatar link",
-    note: "Note"
+    // first: "First",
+    // last: "Last",
+    // twitter: "Twitter Handle",
+    // avater: "Avatar link",
+    // note: "Note"
   };
   let contacts = await getContacts();
   contacts.unshift(contact);
