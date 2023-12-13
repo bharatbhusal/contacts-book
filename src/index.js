@@ -1,11 +1,36 @@
 import { createRoot } from "react-dom/client"
-import { BrowserRouter } from "react-router-dom"
-import App from "./App"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import App, { loader as appLoader, action as appAction } from "./utils/app"
+import ErrorPage from "./error-page"
+import Contact, { loader as contactLoader, action as contactAction } from "./contacts"
+import EditContact, { action as editAction } from "./utils/edit"
 import "./index.css"
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        errorElement: <ErrorPage />,
+        loader: appLoader,
+        action: appAction,
+        children: [
+            {
+                path: "contacts/:contactId",
+                element: <Contact />,
+                loader: contactLoader,
+
+            },
+            {
+                path: "contacts/:contactId/edit",
+                element: <EditContact />,
+                loader: contactLoader,
+                action: editAction,
+            },
+        ]
+    },
+])
 
 const root = createRoot(document.getElementById("root"))
 root.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <RouterProvider router={router} />
 )
