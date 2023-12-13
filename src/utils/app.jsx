@@ -1,5 +1,6 @@
 import { Link, Outlet, useLoaderData, NavLink, useNavigation, Form, redirect, useSubmit } from "react-router-dom";
 import { getContacts, createContact } from "./contacts";
+import "../index.css"
 
 
 export async function loader({ request }) {
@@ -74,13 +75,22 @@ export default function App() {
                                                     ? "pending"
                                                     : ""
                                         }>
-                                        {contact.first || contact.last ? (
-                                            <>
-                                                {contact.first} {contact.last}
-                                            </>
-                                        ) : (
-                                            <i>No Name</i>
-                                        )}{" "}
+                                        <div>
+                                            <div className="contact-icon">
+                                                <img
+                                                    key={contact.avatar}
+                                                    src={contact.avatar}
+                                                />
+                                            </div>
+
+                                            {contact.first || contact.last ? (
+                                                <>
+                                                    {contact.first} {contact.last}
+                                                </>
+                                            ) : (
+                                                <i>No Name</i>
+                                            )}{" "}
+                                        </div>
                                         {contact.favorite && <span>★</span>}
                                     </NavLink>
                                 </li>

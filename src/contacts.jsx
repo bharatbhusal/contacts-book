@@ -46,14 +46,6 @@ function Favorite({ contact }) {
 }
 export default function Contact() {
   const contact = useLoaderData();
-  // const contact = {
-  //   first: "Bharat",
-  //   last: "Bhusal",
-  //   avatar: "https://media.licdn.com/dms/image/C5603AQFadpJ1GlmF4Q/profile-displayphoto-shrink_200_200/0/1635705693557?e=2147483647&v=beta&t=vHgwPrfs7al5w8vIsVYksjZdXTSlEBLAhAr9kkpZMhw",
-  //   twitter: "bharatbhusal02",
-  //   notes: "You are never done learning!",
-  //   favorite: true,
-  // };
 
   return (
     <div id="contact">
