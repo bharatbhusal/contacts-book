@@ -1,18 +1,23 @@
-import { Link, Outlet, useLoaderData, Form } from "react-router-dom";
+import { Link, Outlet, useLoaderData, NavLink, useNavigation, Form, redirect } from "react-router-dom";
 import { getContacts, createContact } from "./contacts";
 
-export async function loader() {
-    const contacts = await getContacts();
+
+export async function loader({ request }) {
+    const url = new URL(request.url);
+    const q = url.searchParams.get("q") || "";
+    const contacts = await getContacts(q);
     return { contacts }
 }
 export async function action() {
-    const contract = await createContact();
-    return { contract };
+    const contact = await createContact();
+    return redirect(`contacts/${contact.id}/edit`)
 }
 
 
 export default function App() {
-    const { contacts } = useLoaderData()
+    const { contacts, q } = useLoaderData()
+    const navigation = useNavigation()
+
     return (
         <>
             <div id="sidebar">
@@ -25,6 +30,7 @@ export default function App() {
                             placeholder="Search"
                             type="search"
                             name="q"
+                            defaultValue={q}
                         />
                         <div
                             id="search-spinner"
@@ -45,7 +51,15 @@ export default function App() {
                         <ul>
                             {contacts.map((contact) => (
                                 <li key={contact.id}>
-                                    <Link to={`contacts/${contact.id}`}>
+                                    <NavLink
+                                        to={`contacts/${contact.id}`}
+                                        className={({ isActive, isPending }) =>
+                                            isActive
+                                                ? "active"
+                                                : isPending
+                                                    ? "pending"
+                                                    : ""
+                                        }>
                                         {contact.first || contact.last ? (
                                             <>
                                                 {contact.first} {contact.last}
@@ -54,7 +68,7 @@ export default function App() {
                                             <i>No Name</i>
                                         )}{" "}
                                         {contact.favorite && <span>★</span>}
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             ))}
                         </ul>
@@ -65,7 +79,11 @@ export default function App() {
                     )}
                 </nav>
             </div>
-            <div id="detail">
+            <div id="detail"
+                className={
+                    navigation.state === "loading" ? "loading" : ""
+                }
+            >
                 <Outlet />
             </div>
         </>
