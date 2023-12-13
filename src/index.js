@@ -8,6 +8,7 @@ import EditContact, { action as editAction } from "./utils/edit"
 import "./index.css"
 import Index from "./utils"
 
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -16,24 +17,30 @@ const router = createBrowserRouter([
         loader: appLoader,
         action: appAction,
         children: [
-            { index: true, element: <Index /> },
             {
-                path: "contacts/:contactId",
-                element: <Contact />,
-                loader: contactLoader,
+                errorElement: <ErrorPage />,
+                children: [
+                    { index: true, element: <Index /> },
+                    {
+                        path: "contacts/:contactId",
+                        element: <Contact />,
+                        loader: contactLoader,
+                        action: contactAction,
 
-            },
-            {
-                path: "contacts/:contactId/edit",
-                element: <EditContact />,
-                loader: contactLoader,
-                action: editAction,
-            },
-            {
-                path: "contacts/:contactId/destroy",
-                action: destroyAction,
-                errorElement: <div>Oops! There was an error.</div>
-            },
+                    },
+                    {
+                        path: "contacts/:contactId/edit",
+                        element: <EditContact />,
+                        loader: contactLoader,
+                        action: editAction,
+                    },
+                    {
+                        path: "contacts/:contactId/destroy",
+                        action: destroyAction,
+                        errorElement: <div>Oops! There was an error.</div>
+                    },
+                ]
+            }
 
         ]
     },
