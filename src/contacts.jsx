@@ -1,21 +1,29 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
+import { getContact } from "./utils/contacts";
+
+export async function loader({ params }) {
+  const contract = await getContact(params.contactId)
+  return { contract }
+}
 
 export default function Contact() {
-  const contact = {
-    first: "Bharat",
-    last: "Bhusal",
-    avatar: "https://media.licdn.com/dms/image/C5603AQFadpJ1GlmF4Q/profile-displayphoto-shrink_200_200/0/1635705693557?e=2147483647&v=beta&t=vHgwPrfs7al5w8vIsVYksjZdXTSlEBLAhAr9kkpZMhw",
-    twitter: "bharatbhusal02",
-    notes: "You are never done learning!",
-    favorite: true,
-  };
+  const contact = useLoaderData();
+  // console.log(contact.first)
+  // const contact = {
+  //   first: "Bharat",
+  //   last: "Bhusal",
+  //   avatar: "https://media.licdn.com/dms/image/C5603AQFadpJ1GlmF4Q/profile-displayphoto-shrink_200_200/0/1635705693557?e=2147483647&v=beta&t=vHgwPrfs7al5w8vIsVYksjZdXTSlEBLAhAr9kkpZMhw",
+  //   twitter: "bharatbhusal02",
+  //   notes: "You are never done learning!",
+  //   favorite: true,
+  // };
 
   return (
     <div id="contact">
       <div>
         <img
           key={contact.avatar}
-          src={contact.avatar || null}
+          src={contact.avatar}
         />
       </div>
 
@@ -56,7 +64,8 @@ export default function Contact() {
                 !confirm(
                   "Please confirm you want to delete this record."
                 )
-              ) {
+              )
+              {
                 event.preventDefault();
               }
             }}

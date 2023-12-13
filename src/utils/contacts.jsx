@@ -6,7 +6,8 @@ export async function getContacts(query) {
   await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts");
   if (!contacts) contacts = [];
-  if (query) {
+  if (query)
+  {
     contacts = matchSorter(contacts, query, { keys: ["first", "last"] });
   }
   return contacts.sort(sortBy("last", "createdAt"));
@@ -15,10 +16,19 @@ export async function getContacts(query) {
 export async function createContact() {
   await fakeNetwork();
   let id = Math.random().toString(36).substring(2, 9);
-  let contact = { id, createdAt: Date.now() };
+  let contact = {
+    id,
+    createdAt: Date.now(),
+    // first: "First Name",
+    // last: "Last Name",
+    // twitter: "Twitter Handle",
+    // avater: "Avatar link",
+    // note: "Note"
+  };
   let contacts = await getContacts();
   contacts.unshift(contact);
   await set(contacts);
+  console.log(contact)
   return contact;
 }
 
@@ -42,7 +52,8 @@ export async function updateContact(id, updates) {
 export async function deleteContact(id) {
   let contacts = await localforage.getItem("contacts");
   let index = contacts.findIndex(contact => contact.id === id);
-  if (index > -1) {
+  if (index > -1)
+  {
     contacts.splice(index, 1);
     await set(contacts);
     return true;
@@ -58,11 +69,13 @@ function set(contacts) {
 let fakeCache = {};
 
 async function fakeNetwork(key) {
-  if (!key) {
+  if (!key)
+  {
     fakeCache = {};
   }
 
-  if (fakeCache[key]) {
+  if (fakeCache[key])
+  {
     return;
   }
 
