@@ -13,7 +13,6 @@ export async function action() {
 
 export default function App() {
     const { contacts } = useLoaderData()
-    // console.log(contacts)
     return (
         <>
             <div id="sidebar">

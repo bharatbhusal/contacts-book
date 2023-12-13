@@ -3,12 +3,11 @@ import { getContact } from "./utils/contacts";
 
 export async function loader({ params }) {
   const contract = await getContact(params.contactId)
-  return { contract }
+  return contract
 }
 
 export default function Contact() {
   const contact = useLoaderData();
-  // console.log(contact.first)
   // const contact = {
   //   first: "Bharat",
   //   last: "Bhusal",
